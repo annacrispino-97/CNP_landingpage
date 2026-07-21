@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CNP makes the science behind natural cosmetics easier to understand, compare and trust.">
+  <title>CNP | Science-backed cosmetic transparency</title>
+  <style>
+    :root {
+      --ink: #16251c;
+      --muted: #5f6e64;
+      --green: #315f24;
+      --green-2: #5d863b;
+      --sage: #dfe8d6;
+      --sage-2: #edf2e9;
+      --cream: #f8f5ed;
+      --paper: #fffef9;
+      --line: rgba(22, 37, 28, 0.13);
+      --shadow: 0 20px 60px rgba(34, 59, 35, 0.12);
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.08;
+      letter-spacing: -.025em;
+    }
+    h1 { font-size: clamp(3rem, 7vw, 6.4rem); font-weight: 500; margin-bottom: 24px; }
+    h2 { font-size: clamp(2.25rem, 5vw, 4.5rem); font-weight: 500; margin-bottom: 22px; }
+    h3 { font-size: 1.45rem; font-weight: 600; margin-bottom: 10px; }
+    .lead { font-size: clamp(1.08rem, 1.5vw, 1.28rem); color: var(--muted); max-width: 700px; }
+    .small { font-size: .9rem; color: var(--muted); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 254, 249, .88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(22, 37, 28, .08);
+    }
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 58px; height: 58px; object-fit: contain; }
+    .brand-wordmark { font-weight: 800; letter-spacing: .08em; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: .92rem; font-weight: 700; }
+    .nav-links a { color: #314038; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--green); }
+    .menu-toggle { display: none; border: 0; background: none; padding: 8px; cursor: pointer; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid var(--green);
+      font-weight: 800;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(49, 95, 36, .17); }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-secondary { background: transparent; color: var(--green); }
+
+    .hero {
+      overflow: hidden;
+      padding: 70px 0 90px;
+      background:
+        radial-gradient(circle at 78% 20%, rgba(156, 185, 125, .23), transparent 34%),
+        linear-gradient(180deg, #fffef9 0%, var(--cream) 100%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 60px; }
+    .hero-logo { width: 168px; margin-bottom: 28px; }
+    .hero .lead { margin-bottom: 30px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; }
+    .trust-line { display: flex; flex-wrap: wrap; gap: 22px; color: var(--muted); font-size: .9rem; font-weight: 700; }
+    .trust-line span { display: inline-flex; align-items: center; gap: 8px; }
+    .trust-line span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); }
+
+    .hero-visual { position: relative; min-height: 620px; display: grid; place-items: center; }
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #dfe9d3;
+      filter: blur(1px);
+    }
+    .hero-visual img {
+      position: relative;
+      width: min(100%, 530px);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      transform: rotate(1.2deg);
+    }
+    .floating-note {
+      position: absolute;
+      right: -4px;
+      bottom: 34px;
+      width: 230px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255, 254, 249, .92);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 42px rgba(22,37,28,.14);
+      font-size: .9rem;
+    }
+    .floating-note strong { display: block; color: var(--green); margin-bottom: 3px; }
+
+    section { padding: 105px 0; }
+    .intro-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; }
+    .intro-copy p { font-size: 1.12rem; color: var(--muted); }
+    .pull-quote {
+      padding: 34px;
+      background: var(--sage-2);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      line-height: 1.35;
+      margin-top: 34px;
+    }
+
+    .section-soft { background: var(--cream); }
+    .section-dark { background: #17311f; color: white; }
+    .section-dark .eyebrow, .section-dark .lead, .section-dark .small { color: #c9d8c9; }
+
+    .reason-head { max-width: 820px; margin-bottom: 54px; }
+    .reasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .reason-card {
+      min-height: 265px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 10px 34px rgba(22,37,28,.05);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .reason-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--sage);
+      color: var(--green);
+      font-weight: 900;
+      margin-bottom: 38px;
+    }
+    .reason-card p { color: var(--muted); margin-bottom: 0; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .mockup-frame { position: relative; }
+    .mockup-frame img { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .mockup-caption {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      padding: 17px 18px;
+      border-radius: 15px;
+      background: rgba(255,254,249,.92);
+      backdrop-filter: blur(10px);
+      color: var(--muted);
+      font-size: .86rem;
+    }
+    .mockup-caption strong { color: var(--ink); }
+    .benefit-list { display: grid; gap: 18px; margin-top: 34px; }
+    .benefit { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; }
+    .benefit-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--sage-2); color: var(--green); font-weight: 900;
+    }
+    .benefit h3 { margin: 0 0 4px; font-family: inherit; font-size: 1rem; letter-spacing: 0; }
+    .benefit p { margin: 0; color: var(--muted); }
+
+    .evidence-header { max-width: 760px; margin-bottom: 52px; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,.16); border-radius: var(--radius-lg); overflow: hidden; }
+    .evidence-item { padding: 34px; background: rgba(255,255,255,.045); min-height: 200px; }
+    .evidence-item:nth-child(even) { border-left: 1px solid rgba(255,255,255,.12); }
+    .evidence-item:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.12); }
+    .evidence-item .tag { color: #a9c390; font-size: .78rem; text-transform: uppercase; letter-spacing: .14em; font-weight: 900; margin-bottom: 12px; display: block; }
+    .evidence-item h3 { color: white; }
+    .evidence-item p { color: #c8d4ca; margin-bottom: 0; }
+
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 50px; }
+    .process-step { padding-top: 24px; border-top: 1px solid var(--line); }
+    .process-step b { color: var(--green); font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; }
+    .process-step p { color: var(--muted); }
+
+    .final-quote { text-align: center; padding: 130px 0; background: linear-gradient(135deg, #eaf0e4, #f8f5ed); }
+    .final-quote blockquote { max-width: 980px; margin: 0 auto 32px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.3rem, 5vw, 5rem); line-height: 1.08; letter-spacing: -.03em; }
+    .final-quote p { margin: 0 auto 30px; max-width: 620px; color: var(--muted); }
+
+    .contact-wrap { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: start; }
+    .contact-panel { padding: 34px; background: var(--cream); border-radius: var(--radius-lg); }
+    form { display: grid; gap: 16px; }
+    label { font-weight: 800; font-size: .88rem; }
+    input, textarea {
+      width: 100%;
+      margin-top: 7px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 14px 15px;
+      background: white;
+      color: var(--ink);
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--green-2); box-shadow: 0 0 0 4px rgba(93,134,59,.12); }
+    textarea { min-height: 130px; resize: vertical; }
+    .form-success { display: none; margin-top: 12px; padding: 13px 15px; border-radius: 12px; background: #e4f1dd; color: #254c20; font-weight: 700; }
+
+    footer { background: #102218; color: #cbd8ce; padding: 58px 0 34px; }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr .6fr .6fr; gap: 48px; }
+    .footer-brand img { width: 94px; margin-bottom: 18px; filter: brightness(1.55); }
+    .footer-grid h3 { font-family: inherit; font-size: .9rem; text-transform: uppercase; letter-spacing: .12em; color: white; }
+    .footer-grid a { display: block; margin: 9px 0; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 44px; padding-top: 24px; font-size: .79rem; color: #9fb0a4; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; position: absolute; top: 78px; left: 20px; right: 20px; padding: 22px; border-radius: 18px; background: var(--paper); box-shadow: var(--shadow); flex-direction: column; align-items: flex-start; }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      .hero-grid, .intro-grid, .split, .contact-wrap { grid-template-columns: 1fr; }
+      .hero-grid { gap: 35px; }
+      .hero-visual { min-height: auto; }
+      .floating-note { right: 10px; bottom: 20px; }
+      .reasons-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(calc(100% - 26px), var(--max)); }
+      .hero { padding-top: 44px; }
+      .hero-logo { width: 130px; }
+      .hero-visual img { border-radius: 22px; }
+      .floating-note { position: relative; width: auto; right: auto; bottom: auto; margin-top: -26px; margin-inline: 18px; }
+      section { padding: 78px 0; }
+      .reasons-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .evidence-item:nth-child(even) { border-left: 0; }
+      .evidence-item:nth-child(n+2) { border-top: 1px solid rgba(255,255,255,.12); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: auto; }
+      .btn { width: 100%; }
+      .hero-actions { display: grid; }
+      h1 { font-size: clamp(2.7rem, 15vw, 4.4rem); }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="CNP home">
+        <img src="assets/cnp-logo.png" alt="CNP Controlled Natural Products logo">
+        <span class="brand-wordmark">CNP</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#meaning">What it means</a>
+        <a href="#why-cnp">Why choose it</a>
+        <a href="#what-we-review">What we review</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-primary" href="#contact">Join the pilot</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="reveal">
+          <img class="hero-logo" src="assets/cnp-logo.png" alt="CNP logo">
+          <span class="eyebrow">Controlled Natural Products</span>
+          <h1>CNP makes the science behind natural cosmetics easier to understand, compare and trust.</h1>
+          <p class="lead">A recognizable logo designed to turn complex product evidence into clear, useful information — for people who want more than a marketing promise.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#meaning">Discover what CNP means</a>
+            <a class="btn btn-secondary" href="#why-cnp">Why brands choose CNP</a>
+          </div>
+          <div class="trust-line" aria-label="CNP values">
+            <span>Science</span><span>Safety</span><span>Clarity</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <img src="assets/body-cream-cnp.webp" alt="Concept body cream packaging showing the CNP logo on the back label">
+          <div class="floating-note"><strong>A small logo. A clear signal.</strong> Designed to sit naturally on packaging without competing with the brand.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="meaning">
+      <div class="shell intro-grid">
+        <div class="reveal">
+          <span class="eyebrow">What does CNP mean?</span>
+          <h2>A logo that makes invisible evidence visible.</h2>
+        </div>
+        <div class="intro-copy reveal">
+          <p>The CNP logo is designed to help consumers recognize natural cosmetic products whose scientific information is communicated clearly and responsibly.</p>
+          <p>It brings attention to what really matters: what the product claims, which ingredients support those claims, whether the finished formulation has been tested, and what safety and quality information is available.</p>
+          <div class="pull-quote">The logo is not meant to say “trust us.” It is meant to show people what they can trust — and why.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="why-cnp">
+      <div class="shell">
+        <div class="reason-head reveal">
+          <span class="eyebrow">Why put CNP on a product?</span>
+          <h2>Six reasons the logo can make a difference.</h2>
+          <p class="lead">CNP is designed for brands that want to compete on clarity, credibility and responsible communication — not only on beautiful packaging.</p>
+        </div>
+        <div class="reasons-grid">
+          <article class="reason-card reveal"><div class="number">01</div><h3>Turn proof into a visible advantage</h3><p>Show customers that there is real scientific information behind the product story, without asking them to decode technical documentation.</p></article>
+          <article class="reason-card reveal"><div class="number">02</div><h3>Stand out beyond “natural”</h3><p>Differentiate the product with a clearer, more responsible message in a market where many brands use the same broad claims.</p></article>
+          <article class="reason-card reveal"><div class="number">03</div><h3>Build trust at the decision point</h3><p>Place a recognizable signal directly on the packaging, where consumers make fast choices and need simple cues they can understand.</p></article>
+          <article class="reason-card reveal"><div class="number">04</div><h3>Make complex science accessible</h3><p>Translate ingredients, tests and formulation evidence into plain language that works for non-specialist consumers.</p></article>
+          <article class="reason-card reveal"><div class="number">05</div><h3>Support responsible claim communication</h3><p>Encourage a clearer link between what a product promises and the evidence that is actually available for the finished formulation.</p></article>
+          <article class="reason-card reveal"><div class="number">06</div><h3>Strengthen premium positioning</h3><p>Add a layer of credibility to a product experience built around quality, transparency and informed choice.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell split">
+        <div class="mockup-frame reveal">
+          <img src="assets/body-cream-cnp.webp" alt="Front and rear concept views of a body cream product, with CNP logo on the back label">
+          <div class="mockup-caption"><strong>Concept visual:</strong> the CNP logo is shown discreetly on the back label of a commercially styled body cream. The product and brand shown are fictional.</div>
+        </div>
+        <div class="reveal">
+          <span class="eyebrow">Designed for the shelf</span>
+          <h2>The product remains the hero. CNP gives it context.</h2>
+          <p class="lead">The logo is intended to work as a subtle transparency mark: easy to notice, simple to recognize and strong enough to invite a more informed choice.</p>
+          <div class="benefit-list">
+            <div class="benefit"><div class="benefit-icon">✓</div><div><h3>Small and adaptable</h3><p>Suitable for the back label, outer box or another secondary packaging area.</p></div></div>
+            <div class="benefit"><div class="benefit-icon">✓</div><div><h3>Clear without being intrusive</h3><p>Supports the brand identity instead of competing with it.</p></div></div>
+            <div class="benefit"><div class="benefit-icon">✓</div><div><h3>Easy to recognize over time</h3><p>Built around three memorable ideas: science, safety and clarity.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="what-we-review">
+      <div class="shell">
+        <div class="evidence-header reveal">
+          <span class="eyebrow">What CNP brings to light</span>
+          <h2>The science consumers rarely see on the label.</h2>
+          <p class="lead">CNP is designed to make the following areas easier to identify, understand and compare.</p>
+        </div>
+        <div class="evidence-grid">
+          <article class="evidence-item reveal"><span class="tag">Claims</span><h3>The evidence behind product claims</h3><p>What supports the promises made by the product, and how relevant that evidence is to the final formulation.</p></article>
+          <article class="evidence-item reveal"><span class="tag">Ingredients</span><h3>The scientific role of active ingredients</h3><p>What the main active or functional ingredients are expected to do, explained in clear and accessible language.</p></article>
+          <article class="evidence-item reveal"><span class="tag">Finished product</span><h3>Available tests on the finished product</h3><p>Whether the complete cosmetic formulation was evaluated, rather than relying only on evidence about individual ingredients.</p></article>
+          <article class="evidence-item reveal"><span class="tag">Quality</span><h3>Stability, quality and formulation data</h3><p>Information about formulation stability, product quality and the technical documentation available.</p></article>
+          <article class="evidence-item reveal"><span class="tag">Safety</span><h3>Safety information, allergens and warnings</h3><p>Relevant precautions, allergens, usage instructions and other information that supports appropriate product use.</p></article>
+          <article class="evidence-item reveal"><span class="tag">Performance</span><h3>Claim-specific evaluations</h3><p>Tests related to moisturising, antioxidant, anti-age, soothing, barrier-support or other product-specific effects.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="split">
+          <div class="reveal">
+            <span class="eyebrow">How the concept works</span>
+            <h2>From technical files to a clearer consumer message.</h2>
+          </div>
+          <p class="lead reveal">No dashboards, no scientific jargon on the package. The goal is to review the relevant information and translate it into a simple transparency signal people can recognize.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-step reveal"><b>Step 1</b><h3>The brand shares its evidence</h3><p>Claims, ingredients, finished-product tests, quality data and safety-related information are gathered for review.</p></article>
+          <article class="process-step reveal"><b>Step 2</b><h3>CNP organizes what matters</h3><p>The available information is assessed and translated into a clear, consumer-friendly explanation.</p></article>
+          <article class="process-step reveal"><b>Step 3</b><h3>The logo signals transparency</h3><p>The CNP mark helps the customer recognize that the science behind the product has been communicated more clearly.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-quote">
+      <div class="shell reveal">
+        <blockquote>Because natural should not just be believed. It should be understood, trusted, and proven.</blockquote>
+        <p>CNP is building a clearer way for natural cosmetic brands to communicate science — and for consumers to make informed choices.</p>
+        <a class="btn btn-primary" href="#contact">Explore a pilot partnership</a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="shell contact-wrap">
+        <div class="reveal">
+          <span class="eyebrow">Contact CNP</span>
+          <h2>Make transparency part of the product story.</h2>
+          <p class="lead">Are you a cosmetic brand, researcher, mentor or potential partner? Tell us what you are working on and why scientific transparency matters to you.</p>
+          <p class="small"><strong>Early-stage concept:</strong> CNP is currently developing its methodology and pilot model.</p>
+        </div>
+        <div class="contact-panel reveal">
+          <form id="contactForm">
+            <label>Name<input type="text" name="name" autocomplete="name" required></label>
+            <label>Email<input type="email" name="email" autocomplete="email" required></label>
+            <label>Company or organization<input type="text" name="company" autocomplete="organization"></label>
+            <label>Message<textarea name="message" required placeholder="Tell us about your product, project or interest in CNP."></textarea></label>
+            <button class="btn btn-primary" type="submit">Send your interest</button>
+            <div class="form-success" id="formSuccess" role="status">Thank you for your interest in CNP. This prototype form is ready to connect to your Wix or website inbox.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="assets/cnp-logo.png" alt="CNP logo"><p>Science-backed cosmetic transparency, made easier to understand.</p></div>
+        <div><h3>Explore</h3><a href="#meaning">What CNP means</a><a href="#why-cnp">Why choose CNP</a><a href="#what-we-review">What we review</a></div>
+        <div><h3>Connect</h3><a href="#contact">Contact</a><span>LinkedIn coming soon</span></div>
+      </div>
+      <div class="footer-bottom">CNP is currently an early-stage concept. This website is for presentation purposes only and does not represent an official certification, regulatory approval, medical assessment, or guarantee of product safety or efficacy. The product and brand shown in the visual mock-up are fictional.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('contactForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      event.target.reset();
+    });
+  </script>
+</body>
+</html>
